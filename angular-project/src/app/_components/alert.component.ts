@@ -7,11 +7,16 @@ import { AlertService } from '@app/_services';
 
 @Component({ selector: 'alert', templateUrl: 'alert.component.html', standalone: false }) 
 export class AlertComponent implements OnInit, OnDestroy {
+    private scheduleDetectChanges() {
+        setTimeout(() => this.cdr.detectChanges()); 
+    }
     @Input() id = 'default-alert'; 
     @Input() fade = true; 
+
     alerts: Alert[] = []; 
     alertSubscription!: Subscription; 
     routeSubscription!: Subscription; 
+
     constructor(
         private router: Router, 
         private alertService: AlertService,
@@ -100,9 +105,5 @@ export class AlertComponent implements OnInit, OnDestroy {
         }
 
         return classes.join(' ');
-    }
-
-    private scheduleDetectChanges() {
-        setTimeout(() => this.cdr.detectChanges()); 
-    }
+    }    
 }
