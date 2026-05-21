@@ -42,7 +42,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.accountService
       .forgotPassword(this.f['email'].value)
       .pipe(first())
-      .pipe(finalize(() => (this.loading = false)))
+      .pipe(finalize(() => setTimeout(() => (this.loading = false))))
       .subscribe({
         next: () =>
           this.alertService.success('Please check your email for password reset instructions'),

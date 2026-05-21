@@ -46,6 +46,11 @@ export class AccountService {
     refreshToken() {
         return this.http.post<any>(`${baseUrl}/refresh-token`, {}, { withCredentials: true })
             .pipe(map(account => {
+                if (!account) {
+                    this.stopRefreshTokenTimer();
+                    this.accountSubject.next(null);
+                    return account;
+                }
                 this.accountSubject.next(account);
                 this.startRefreshTokenTimer();
                 return account;

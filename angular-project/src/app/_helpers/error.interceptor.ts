@@ -16,7 +16,10 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.accountService.logout();
             }
             const error = (err && err.error && err.error.message) || err.statusText;
-            console.error(err);
+            const isStartupRefresh = request.url.endsWith('/accounts/refresh-token') && !this.accountService.accountValue;
+            if (!isStartupRefresh) {
+                console.error(err);
+            }
             return throwError(() => error);
         }));
     }
